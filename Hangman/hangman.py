@@ -4,10 +4,11 @@ if __name__ == '__main__':
     # stage 1
     print('HANGMAN\nTry to not being hanged')
 
-    # stage 3
+    # stage 4
     TO_GUESS = rnd.choice(['apple', 'banana', 'cucumber', 'watermelon'])
-    print(TO_GUESS)
-    print('Guess the word:')
+    formated_guess = TO_GUESS[:3] + '-' * (len(TO_GUESS) - 3)
+
+    print(f'Guess the word {formated_guess}:')
     user_guess = input()
 
     if user_guess == TO_GUESS:
