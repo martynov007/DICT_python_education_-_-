@@ -21,12 +21,13 @@ if __name__ == '__main__':
         #  здесь хочется проверить длину слова. Ну ладно, делаю по заданию
         user_guess = input()
 
-        if user_guess in TO_GUESS \
-                and user_guess not in already_guessed:
-            already_guessed.append(user_guess)
+        if user_guess not in TO_GUESS:
+            print('That letter doesn\'t appear in the word')
+            HP -= 1
+        elif user_guess in already_guessed:
+            print('No improvements')
+            HP -= 1
         else:
-            print('You didn\'t guess')
-
-        HP -= 1
+            already_guessed.append(user_guess)
 
     print('Game over')
