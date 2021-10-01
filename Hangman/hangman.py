@@ -1,17 +1,32 @@
+from itertools import filterfalse
 import random as rnd
 
 if __name__ == '__main__':
     # stage 1
     print('HANGMAN\nTry to not being hanged')
 
-    # stage 4
-    TO_GUESS = rnd.choice(['apple', 'banana', 'cucumber', 'watermelon'])
-    formated_guess = TO_GUESS[:3] + '-' * (len(TO_GUESS) - 3)
+    # stage 5
+    HP = 8  # Health points
+    TO_GUESS = 'water'
+    already_guessed = []
+    over = False
 
-    print(f'Guess the word {formated_guess}:')
-    user_guess = input()
+    while len(already_guessed) < len(TO_GUESS) \
+            and HP != 0:
+        formated_guess = ''.join([x if x in already_guessed
+                                 else '-' for x in TO_GUESS])
 
-    if user_guess == TO_GUESS:
-        print('You\'r survived!')
-    else:
-        print('You\'r hanged!')
+        print(f'Guess a letter {formated_guess}:')
+
+        #  здесь хочется проверить длину слова. Ну ладно, делаю по заданию
+        user_guess = input()
+
+        if user_guess in TO_GUESS \
+                and user_guess not in already_guessed:
+            already_guessed.append(user_guess)
+        else:
+            print('You didn\'t guess')
+
+        HP -= 1
+
+    print('Game over')
