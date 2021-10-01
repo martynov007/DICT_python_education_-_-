@@ -5,29 +5,37 @@ if __name__ == '__main__':
     # stage 1
     print('HANGMAN\nTry to not being hanged')
 
-    # stage 5
+    # stage 7
     HP = 8  # Health points
     TO_GUESS = 'water'
     already_guessed = []
-    over = False
+    opnd_ltr = []
 
-    while len(already_guessed) < len(TO_GUESS) \
+    while len(opnd_ltr) < len(TO_GUESS) \
             and HP != 0:
-        formated_guess = ''.join([x if x in already_guessed
+        formated_guess = ''.join([x if x in opnd_ltr
                                  else '-' for x in TO_GUESS])
 
-        print(f'Guess a letter {formated_guess}:')
+        print(f'\nGuess a letter {formated_guess}:')
 
-        #  здесь хочется проверить длину слова. Ну ладно, делаю по заданию
         user_guess = input()
+        if len(user_guess) > 1:
+            print('You should input a single letter.')
+            continue
 
-        if user_guess not in TO_GUESS:
+        if not str.isalpha(user_guess)\
+                or not str.islower(user_guess):
+            print('Please enter a lowercase English letter.')
+            continue
+
+        if user_guess in already_guessed:
+            print('You\'ve already guessed this letter')
+        elif user_guess not in TO_GUESS:
             print('That letter doesn\'t appear in the word')
             HP -= 1
-        elif user_guess in already_guessed:
-            print('No improvements')
-            HP -= 1
         else:
-            already_guessed.append(user_guess)
+            opnd_ltr.append(user_guess)
+
+        already_guessed.append(user_guess)
 
     print('Game over')
