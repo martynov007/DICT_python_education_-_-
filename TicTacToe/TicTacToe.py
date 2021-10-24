@@ -15,6 +15,37 @@ def main():
     print('|' + ' '.join(list(cells[6:9])) + '|')
     print('-------')
 
+    cells_two_dim = [list(cells[0:3]), list(cells[3:6]), list(cells[6:9])]
+
+    while True:
+        i, j = input('Enter the coordinates:').split(' ')
+
+        if not i.isnumeric() or not j.isnumeric():
+            print('You should enter numbers!')
+            continue
+
+        i, j = (int(i), int(j))
+        if (i < 1 or i > 3)\
+            or (j < 1 or j > 3):
+            print('Coordinates should be from 1 to 3!')
+            continue
+        if cells_two_dim[i-1][j-1] != '_':
+            print('This cell is occupied! Choose another one!')
+            continue
+        else:
+            cells_two_dim[i-1][j-1] = 'X'
+        break
+
+    cells = []
+    for el in cells_two_dim:
+        cells.extend(el)
+    
+    print('-------')
+    print('|' + ' '.join(list(cells[0:3])) + '|')
+    print('|' + ' '.join(list(cells[3:6])) + '|')
+    print('|' + ' '.join(list(cells[6:9])) + '|')
+    print('-------')
+    
     WIN_OPT = (
         (0, 1, 2),
         (3, 4, 5),
