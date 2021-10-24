@@ -1,7 +1,22 @@
 import logging
 logging.basicConfig(level=logging.INFO, format='%(message)s')
 
-# * stage5
+# * stage6
+
+class CoffeeMachine:
+    def __init__(self, action) -> None:
+        self.action = action
+
+        if action == 'buy':
+            buy_coffee()
+        elif action.strip().lower() == 'fill':
+            fill_inventory()
+        elif action.strip().lower() == 'take':
+            withdraw_money()
+        elif action.strip().lower() == 'remaining':
+            show_inventory()
+        else:
+            logging.warning('\nchoice right option')
 
 # * init coffee machine
 WATER = 400
@@ -106,24 +121,8 @@ def withdraw_money():
 while True:
     action = input('\nWrite action (buy, fill, take, remaining, exit):')
 
-    if action == 'buy':
-        buy_coffee()
-    elif action.strip().lower() == 'fill':
-        fill_inventory()
-    elif action.strip().lower() == 'take':
-        withdraw_money()
-    elif action.strip().lower() == 'remaining':
-        show_inventory()
-    elif action.strip().lower() == 'exit':
+    if action == 'exit':
         break
-    else:
-        logging.warning('\nchoice right option')
 
+    CoffeeMachine(action)
 
-# logging.info('Starting to make a coffee')
-# logging.info('Grinding coffee beans')
-# logging.info('Boiling water')
-# logging.info('Mixing boiled water with crushed coffee beans')
-# logging.info('Pouring coffee into the cup')
-# logging.info('Pouring some milk into the cup')
-# logging.info('Coffee is ready!')
