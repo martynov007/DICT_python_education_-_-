@@ -9,13 +9,11 @@ class CreditCalculator:
         except Exception:
             print('It should be numbers!')
 
-
     def calc_monthly_payment(self, payment_amount):
         self.payment_amount = float(payment_amount)
         self.month_amount = math.ceil(self.credit_amount/self.payment_amount)
 
         print('Monthly payment is {}'.format(self.month_amount))
-
 
     def calc_payment_amount(self, month_amount):
         self.month_amount = float(month_amount)
@@ -32,7 +30,6 @@ class CreditCalculator:
         except AttributeError:
             pass
 
-
     def __str__(self) -> str:
         return ('Credit amount: {}'
                 '\nMonth amount: {}'
@@ -43,19 +40,58 @@ class CreditCalculator:
         )
 
 
+class ImprovedCreditCalculator:
+    def calc_montly_payment(self, n, year_interest_rate, P):
+        i = year_interest_rate / (100 * 12)
+        self.A = P * ((i * pow(1 + i, n))/(pow(1 + i, n) - 1))
+        print(f'Your monthly payment = {self.A}!')
+        
+        
+    def calc_monthes_amount(self, A, year_interest_rate, P):
+        i = year_interest_rate / (100 * 12)
+        self.n = math.ceil(math.log(A/(A - i * P), 1 + i))
+
+        years = math.floor(self.n / 12)
+        months = math.ceil(self.n % 12)
+
+        if years > 0 and months > 0:
+            print(
+                f'It will take {years} year(s) and {months} month(s) to repay this loan!')
+        elif years > 0:
+            print(f'It will take {years} year(s) to repay this loan!')
+        elif months > 0:
+            print(f'It will take {months} month(s) to repay this loan!')
+
+    def calc_credit_amount(self, A, year_interest_rate, n):
+        i = year_interest_rate / (100 * 12)
+        self.P = A / ((i * pow(1 + i, n))/(pow(1+i, n) - 1))
+
+        print(f'Your loan principal = {self.P}!')
+        
+
 def main():
-    credit_calc = CreditCalculator(input('Enter the credit amount\n'))
+    improved_credit_calc = ImprovedCreditCalculator()
     choice = input(('What do you want to calculate?'
-                    '\ntype "m" – for amount of monthly payments,'
-                    '\ntype "p" – for the monthly payment:'))
+                    '\ntype "n" for number of monthly payments,'
+                    '\ntype "a" for annuity monthly payment amount,'
+                    '\ntype "p" for loan principal:'))
 
     match choice:
-        case 'm':
-            payment_amount = input('Enter the payment per month: ')
-            credit_calc.calc_monthly_payment(payment_amount)
+        case 'n':
+            P = float(input('Enter the loan principal: '))
+            A = float(input('Enter the monthly payment: '))
+            rate = float(input('Enter the loan interest: '))
+            improved_credit_calc.calc_monthes_amount(A, rate, P)
         case 'p':
-            month_amount = input('Enter the amount of months: ')
-            credit_calc.calc_payment_amount(month_amount)
+            A = float(input('Enter the monthly payment: '))
+            n = float(input('Enter the number of periods: '))
+            rate = float(input('Enter the loan interest: '))
+            improved_credit_calc.calc_credit_amount(A, rate, n)
+        case 'a':
+            P = float(input('Enter the loan principal: '))
+            n = float(input('Enter the number of periods: '))
+            rate = float(input('Enter the loan interest: '))
+            improved_credit_calc.calc_montly_payment(n, rate, P)
         case _:
             print('not option for {}'.format(choice))
 
