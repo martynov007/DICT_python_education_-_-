@@ -57,14 +57,21 @@ class Matrix:
         return self
 
 
+    def mupltiply(self, factor):
+        for i in range(self.rows):
+            for j in range(self.cols):
+                self.matrix[i][j] *= factor
+
+        return self
+
     def __str__(self) -> str:
         self.show_matrix()
         return ''
 
 
 def main():
-    matrix_from_str = Matrix.trans_from_str(Matrix()).show_matrix()
-
+    matrix1 = Matrix.trans_from_str(Matrix()).show_matrix()
+    matrix1.mupltiply(2).show_matrix()
 
 
 if __name__ == "__main__":
