@@ -1,3 +1,6 @@
+import random
+
+
 class Person(object):
     """docstring for Person."""
     def __init__(self):
@@ -29,9 +32,16 @@ class Dinner(object):
             self.people.update({Person().name: 0})
 
         self.bill_total = float(input('Enter the bill total: '))
+
+        is_lucky = input('Wanna choose a lucky one ?(+,-): ')
+
+        if is_lucky == '+':
+            self.lucky_one = random.choice(list(self.people.keys()))
+            print(f'{self.lucky_one} is lucky one!! They don\'t pay for bill')
+            self.people.pop(self.lucky_one)
         
         for person in self.people:
-            self.people.update({person: round(self.bill_total/self.amount, 2)})
+            self.people.update({person: round(self.bill_total/len(self.people), 2)})
 
 
     def __str__(self) -> str:
