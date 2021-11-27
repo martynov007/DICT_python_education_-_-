@@ -13,7 +13,7 @@ class Person(object):
 class Dinner(object):
     """docstring for Dinner."""
     people = {}
-
+    lucky_one = ''
 
     def __init__(self):
         try:
@@ -33,15 +33,23 @@ class Dinner(object):
 
         self.bill_total = float(input('Enter the bill total: '))
 
+        self.calc_bill()
+
         is_lucky = input('Wanna choose a lucky one ?(+,-): ')
 
         if is_lucky == '+':
             self.lucky_one = random.choice(list(self.people.keys()))
             print(f'{self.lucky_one} is lucky one!! They don\'t pay for bill')
-            self.people.pop(self.lucky_one)
-        
+
+            self.people.update({self.lucky_one: 0})
+            self.amount -= 1
+            self.calc_bill()
+
+
+    def calc_bill(self):
         for person in self.people:
-            self.people.update({person: round(self.bill_total/len(self.people), 2)})
+            if person != self.lucky_one:
+                self.people.update({person: round(self.bill_total/self.amount, 2)})
 
 
     def __str__(self) -> str:
