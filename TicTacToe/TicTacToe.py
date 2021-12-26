@@ -32,7 +32,7 @@ def main():
 
     while is_play:
         try:
-            i, j = input('Enter the coordinates:').split(' ')
+            i, j = input('{} Enter the coordinates:'.format(player)).split(' ')
         except:
             print('You should enter two numbers!')
             continue
