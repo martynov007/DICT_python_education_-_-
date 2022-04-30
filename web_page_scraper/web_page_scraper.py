@@ -1,8 +1,5 @@
-import json
-from pydoc import describe
 import requests as req
-from bs4 import BeautifulSoup as bs
-
+import os
 
 class WebPageScraper:
     
@@ -13,29 +10,14 @@ class WebPageScraper:
         res = req.get(url, headers=headers)
         
         if not res:
-            print('Invalid resource!')
+            print('The URL returned {}'.format(res.status_code))
             return
 
-        soup = bs(res.text, 'html.parser')
+        pg_html_content = res.content
 
-        title_html = soup.find('title')
-        script_dict = json.loads(soup.find('script', type='application/ld+json').string)
-        
-        if not title_html or not script_dict:
-            print('Invalid resource!')
-            return
-
-        self.show_film_dict(title_html.text, script_dict.get('description'))
-
-    @staticmethod
-    def show_film_dict(title, description):
-        film_dict = {
-            'title': title,
-            'description': description
-        }
-
-        print(film_dict)
-
+        with open(os.path.join('web_page_scraper','source.html'), mode='wb') as f:
+            f.write(pg_html_content)
+            print('Content saved!')
 
 if __name__ == "__main__":
     WebPageScraper()
